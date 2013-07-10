@@ -6,9 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
 import com.codepath.simplegame.AbstractGamePanel;
-import com.codepath.simplegame.actors.SimpleMovingActor;
+import com.codepath.simplegame.actors.PositionedActor;
 
-public class AppleActor extends SimpleMovingActor {
+public class AppleActor extends PositionedActor {
 	
 	public static final int DRAW_SIZE = 25;
 
@@ -28,8 +28,7 @@ public class AppleActor extends SimpleMovingActor {
 	}
 	
 	public void reposition(AbstractGamePanel panel) { 
-		setPos(randomCoordForPanel(panel.getWidth()), 
-			randomCoordForPanel(panel.getHeight()));
+		setPos(randomCoordForPanel(panel.getWidth()), randomCoordForPanel(panel.getHeight()));
 	}
 
 	protected int randomCoordForPanel(int max) {
