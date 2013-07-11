@@ -2,26 +2,29 @@ package com.codepath.examples.basicsnakegame;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.codepath.simplegame.AbstractGamePanel;
 import com.codepath.simplegame.Velocity;
-import com.codepath.simplegame.actors.SimpleMovingActor;
+import com.codepath.simplegame.actors.SpriteMovingActor;
 
-public class SnakeActor extends SimpleMovingActor {
+public class SpriteSnakeActor extends SpriteMovingActor {
 	public static final int DRAW_SIZE = 25;
 	public static final int STEP = 25;
 	public ArrayList<Point> tailPos;
+	private Context context;
 
-	public SnakeActor(int x, int y) {
-		super(x, y, DRAW_SIZE, DRAW_SIZE);
+	public SpriteSnakeActor(Context c, int x, int y) {
+		super(c, R.drawable.snake_head_right, x, y);
+		this.context = c;
 		getVelocity().stop().setXDirection(Velocity.DIRECTION_RIGHT).setXSpeed(STEP);
 		tailPos = new ArrayList<Point>();
 		tailPos.add(new Point(x - this.getWidth(), y));
@@ -37,10 +40,10 @@ public class SnakeActor extends SimpleMovingActor {
 	@Override
 	public void draw(Canvas canvas) {
 		getPaint().setColor(Color.GREEN);
-		canvas.drawRect(getRect(), getPaint());
+		canvas.drawBitmap(bitmap, getX(), getY(), null);
 		for (Point p : tailPos) {
-			Rect r = new Rect(p.x, p.y, p.x + this.getWidth(), p.y + this.getHeight());
-			canvas.drawRect(r, getPaint());
+			RectF r = new RectF(p.x, p.y, p.x + this.getWidth(), p.y + this.getHeight());
+			canvas.drawRoundRect(r, 10f, 10f, getPaint());
 		}
 	}
 
@@ -55,9 +58,9 @@ public class SnakeActor extends SimpleMovingActor {
 			super.move();
 		}
 	}
-
+ 
 	public void grow() {
-		this.tailPos.add(new Point(getX(), getY()));
+		this.tailPos.add(new Point(tailPos.get(0).x, tailPos.get(0).y));
 	}
 
 	public boolean checkBoundsCollision(AbstractGamePanel panel) {
@@ -89,14 +92,18 @@ public class SnakeActor extends SimpleMovingActor {
 		if (getVelocity().getYSpeed() == 0) {
 			if (event.getY() < this.getY()) {
 				getVelocity().stop().setYDirection(Velocity.DIRECTION_UP).setYSpeed(STEP);
+				setDrawable(context, R.drawable.snake_head_up);
 			} else if (event.getY() > this.getY() && getVelocity().getYSpeed() == 0) {
 				getVelocity().stop().setYDirection(Velocity.DIRECTION_DOWN).setYSpeed(STEP);
+				setDrawable(context, R.drawable.snake_head_down);
 			}
 		} else if (getVelocity().getXSpeed() == 0) {
 			if (event.getX() < this.getX()) {
 				getVelocity().stop().setXDirection(Velocity.DIRECTION_LEFT).setXSpeed(STEP);
+				setDrawable(context, R.drawable.snake_head_left);
 			} else if (event.getX() > this.getX()) {
 				getVelocity().stop().setXDirection(Velocity.DIRECTION_RIGHT).setXSpeed(STEP);
+				setDrawable(context, R.drawable.snake_head_right);
 			}
 		}
 	}

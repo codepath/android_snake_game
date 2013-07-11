@@ -15,15 +15,15 @@ public class SnakeGamePanel extends AbstractGamePanel {
 		super(context);
 	}
 
-	private SnakeActor snake;
-	private AppleActor apple;
+	private SpriteSnakeActor snake;
+	private SpriteAppleActor apple;
 	private ScoreBoard score;
 	private boolean isPaused = false;
 
 	@Override
 	public void onStart() {
-		this.snake = new SnakeActor(100, 100);
-		this.apple = new AppleActor(200, 50);
+		this.snake = new SpriteSnakeActor(getContext(), 100, 100);
+		this.apple = new SpriteAppleActor(getContext(), 200, 50);
 		this.score = new ScoreBoard(this);
 	}
 
