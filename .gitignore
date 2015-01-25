@@ -1,3 +1,5 @@
+# Source: https://gist.github.com/nesquena/5617544/raw/53710b374e7df3302df43b552488d876040ada3d/.gitignore
+
 # built application files
 *.apk
 *.ap_
@@ -14,7 +16,6 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
-project.properties
 
 # Eclipse project files
 .classpath
@@ -56,3 +57,10 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+# Android Studio project files
+*.iml
+.gradle
+.idea
+build
+import-summary.txt
